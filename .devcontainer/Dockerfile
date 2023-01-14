@@ -30,11 +30,13 @@ RUN apt-get update \
         lcov \
         jq \
         ghostscript \
+        pdf2svg \
     && echo $NB_USER ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$NB_USER \
     && chmod 0440 /etc/sudoers.d/$NB_USER \
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
     # ghostscript for handling eps image files
+    # pdf2svg is for vscode eps-preview extension
 
 
 # Install Julia
@@ -87,6 +89,7 @@ RUN mamba install --quiet --yes \
         ipywidgets=7.6 \
         numpy=1.21 \
         pandas=1.3 \
+        seaborn=0.12 \
         matplotlib=3.5 \
         scipy=1.7 \
         scikit-learn=1.0 \

@@ -35,7 +35,8 @@
         "ritwickdey.liveserver",
         "nobuhito.printcode",
         "mutantdino.resourcemonitor",
-        "felipecaputo.git-project-manager"
+        "felipecaputo.git-project-manager",
+        "mkvoya.eps-preview"
     ],
     "settings": {
         "julia.environmentPath": "/home/jovyan/swc-forecast-insider",
