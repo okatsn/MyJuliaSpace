@@ -1,12 +1,12 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
 // https://github.com/microsoft/vscode-dev-containers/tree/master/containers/docker-existing-dockerfile
 {
-    "name": "swc-forecast-insider",
+    "name": "my-julia-space",
     // ===== Use Docker Compose =====
     "dockerComposeFile": "docker-compose.yml",
     "service": "dev",
     "shutdownAction": "stopCompose",
-    "workspaceFolder": "/home/jovyan/swc-forecast-insider",
+    "workspaceFolder": "/home/jovyan/my-julia-space",
     "extensions": [
         "ms-azuretools.vscode-docker",             // Docker
         "julialang.language-julia",                // julia
@@ -39,7 +39,7 @@
         "mkvoya.eps-preview"
     ],
     "settings": {
-        "julia.environmentPath": "/home/jovyan/swc-forecast-insider",
+        "julia.environmentPath": "/home/jovyan/my-julia-space",
         "[julia]": {
             // https://github.com/invenia/BlueStyle#vs-code-settings
             "editor.detectIndentation": false,
@@ -57,7 +57,7 @@
         "color-highlight.markerType": "dot-before",
         "color-manager.autoStartIntellisense": true,
         "gitProjectManager.baseProjectsFolders": [
-            "/home/jovyan/swc-forecast-insider"
+            "/home/jovyan/my-julia-space"
             ], // this allows GPM (felipecaputo.git-project-manager) to open repo in the "projects" in a new window
         "python.terminal.activateEnvironment": false,
         "git.checkoutType": [
