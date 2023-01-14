@@ -2,8 +2,8 @@
 version: '3'
 
 services:
-  dev_1:
-    image: my-playground
+  dev:
+    image: my-julia-space
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
