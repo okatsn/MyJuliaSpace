@@ -42,10 +42,13 @@ RUN apt-get update \
 # Install Julia
 ARG VARIANT="what.ever.is.ok.since.it.will.be.overwritten.by.that.in.docker-compose.yml"
 ARG JULIA_PKG_DEVDIR="this.is.into.which.dev.clones.packages."
+ARG SUB_PROJECT_DIR="this.is.into.which.git.clones.any.repos."
 
 # Set enviroment variable
-# RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
-ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
+# RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
+#     && export SUB_PROJECT_DIR=${SUB_PROJECT_DIR} \
+ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
+    SUB_PROJECT_DIR=${SUB_PROJECT_DIR}
 
 # it should be defined here, despite it will overwritten by that in docker-compose.yml
 RUN mkdir /opt/julia-${VARIANT} \
@@ -140,6 +143,7 @@ ENV JULIA_PROJECT=@.
 # https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
 RUN mkdir -p /home/$NB_USER/.vscode-server/extensions \
         /home/$NB_USER/.vscode-server-insiders/extensions \
+        $SUB_PROJECT_DIR \
     && chown -R $NB_USER \
         /home/$NB_USER/.vscode-server \
         /home/$NB_USER/.vscode-server-insiders
@@ -172,6 +176,8 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
     && mkdir -p ~/.config
 #    && echo -e '[conda]\nsymbol = "Conda "\nignore_base = false' > ~/.config/starship.toml
 # starship settings are now all managed directly in .devcontainer/starship.toml
+# ">" : overwrite
+# ">>": append
 
 RUN fix-permissions /home/$NB_USER
 
