@@ -99,7 +99,7 @@ WORKDIR $PROJECT_DIR
 #     && pip install pyopenssl --upgrade
 
 # # https://stackoverflow.com/questions/74705127/how-to-fix-error-module-lib-has-no-attribute-x509-v-flag-cb-issuer-check
-RUN pip uninstall cryptography \
+RUN pip uninstall -y cryptography \
     && pip install --upgrade cryptography==36.0.2
 
 RUN mamba install --quiet --yes \
