@@ -91,12 +91,12 @@ WORKDIR $PROJECT_DIR
 # # https://askubuntu.com/questions/1428181/module-lib-has-no-attribute-x509-v-flag-cb-issuer-check/1433089#1433089
 # RUN python3 -m easy_install pyOpenSSL-22.0.0-py2.py3-none-any.whl
 
-# https://stackoverflow.com/questions/74980825/build-the-project-in-git-actions-using-sam-i-am-getting-new-error-attributeerr
-RUN pip install --upgrade pyopenssl
+# # https://stackoverflow.com/questions/74980825/build-the-project-in-git-actions-using-sam-i-am-getting-new-error-attributeerr
+# RUN pip install --upgrade pyopenssl
 
 # https://stackoverflow.com/questions/73830524/attributeerror-module-lib-has-no-attribute-x509-v-flag-cb-issuer-check
-# RUN pip install pip --upgrade
-#     pip install pyopenssl --upgrade
+RUN pip install pip --upgrade
+    pip install pyopenssl --upgrade
 
 # # https://stackoverflow.com/questions/74705127/how-to-fix-error-module-lib-has-no-attribute-x509-v-flag-cb-issuer-check
 # RUN pip uninstall cryptography
