@@ -10,7 +10,7 @@ services:
       args:
         VARIANT: "1.6.7"
         PROJECT_DIR: /home/jovyan/my-julia-space #can be arbitrary; it's not required to be identical with the project directory in your WSL unbuntu (20.04)
-        JULIA_PKG_DEVDIR: /home/jovyan/.julia/dev # just let it be default. See [JULIA_PKG_DEVDIR](https://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_PKG_DEVDIR). Be aware that some tests will depend on JULIA_PKG_DEVDIR.
+        JULIA_PKG_DEVDIR: /home/jovyan/my-julia-space/dev 
         SUB_PROJECT_DIR: /home/jovyan/my-julia-space/subprojects # KEYNOTE: also check "gitProjectManager.baseProjectsFolders" in devcontainer.json that if GPM can get JULIA_PKG_DEVDIR and SUB_PROJECT_DIR
     init: true
     # See https://docs.docker.com/compose/compose-file/compose-file-v3/#init
