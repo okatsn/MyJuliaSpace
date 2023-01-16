@@ -88,6 +88,21 @@ WORKDIR $PROJECT_DIR
 # HINT: `conda list` to see the version.
 # HINT: `jupyter notebook` in bash to get the link to the notebook hosted in the virtual machine.
 # TODO: write documentation in InstallJupyterLabWithoutAnaconda.md
+
+
+# KEYNOTE: In cases of AttributeError, (e.g., AttributeError: module 'lib' has no attribute 'OpenSSL_add_all_algorithms'), try the followings: 
+# # [In the case where there is no attribute openssl](https://stackoverflow.com/questions/74980825/build-the-project-in-git-actions-using-sam-i-am-getting-new-error-attributeerr)
+RUN pip install --upgrade pyopenssl
+# Similar issues:
+# # https://askubuntu.com/questions/1428181/module-lib-has-no-attribute-x509-v-flag-cb-issuer-check/1433089#1433089
+# # https://stackoverflow.com/questions/73830524/attributeerror-module-lib-has-no-attribute-x509-v-flag-cb-issuer-check
+# RUN pip install pip --upgrade \
+#     && pip install pyopenssl --upgrade
+#
+# # [In the case where there is no attribute X509_V_FLAG_CB_ISSUER_CHECK](https://stackoverflow.com/questions/74705127/how-to-fix-error-module-lib-has-no-attribute-x509-v-flag-cb-issuer-check)
+# RUN pip uninstall -y cryptography \
+#     && pip install --upgrade cryptography==36.0.2
+
 RUN mamba install --quiet --yes \
         ipywidgets=7.6 \
         numpy=1.21 \
