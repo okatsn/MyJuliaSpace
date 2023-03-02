@@ -5,7 +5,7 @@
 # https://github.com/MalteBoehm/julia_docker-compose_template/blob/main/Dockerfile
 
 # From dockerhub get an example image that you don't need to build your linux environment from scratch
-FROM jupyter/minimal-notebook:python-3.9.7
+FROM jupyter/minimal-notebook:ubuntu-22.04
 USER root
 
 
@@ -73,7 +73,6 @@ WORKDIR $PROJECT_DIR
 
 
 # TODO: CHECK!! use environment.yml, Project.toml and Manifest.toml to add python and julia packages
-# COPY .devcontainer/environment.yml .devcontainer/Project.toml .devcontainer/Manifest.toml ${PROJECT_DIR}
 COPY .devcontainer/environment.yml ${PROJECT_DIR}
 RUN conda env update --file environment.yml \
     && rm -f environment.yml
@@ -93,7 +92,7 @@ RUN conda env update --file environment.yml \
 
 # KEYNOTE: In cases of AttributeError, (e.g., AttributeError: module 'lib' has no attribute 'OpenSSL_add_all_algorithms'), try the followings: 
 # # [In the case where there is no attribute openssl](https://stackoverflow.com/questions/74980825/build-the-project-in-git-actions-using-sam-i-am-getting-new-error-attributeerr)
-RUN pip install --upgrade pyopenssl
+# RUN pip install --upgrade pyopenssl
 # Similar issues:
 # # https://askubuntu.com/questions/1428181/module-lib-has-no-attribute-x509-v-flag-cb-issuer-check/1433089#1433089
 # # https://stackoverflow.com/questions/73830524/attributeerror-module-lib-has-no-attribute-x509-v-flag-cb-issuer-check
