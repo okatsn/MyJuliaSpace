@@ -74,8 +74,9 @@ WORKDIR $PROJECT_DIR
 
 # TODO: CHECK!! use environment.yml, Project.toml and Manifest.toml to add python and julia packages
 # COPY .devcontainer/environment.yml .devcontainer/Project.toml .devcontainer/Manifest.toml ${PROJECT_DIR}
-# RUN conda env update --file environment.yml \
-#     && rm -f environment.yml \
+COPY .devcontainer/environment.yml ${PROJECT_DIR}
+RUN conda env update --file environment.yml \
+    && rm -f environment.yml
 #     && mkdir -p ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`
 #     && cp Project.toml Manifest.toml ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`/Project.toml \
 #     && julia -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
