@@ -104,20 +104,11 @@ RUN conda env update --file environment.yml \
 #     && pip install --upgrade cryptography==36.0.2
 
 RUN mamba install --quiet --yes \
-        ipywidgets=7.6 \
-        numpy=1.21 \
-        pandas=1.3 \
-        seaborn=0.12 \
-        matplotlib=3.5 \
-        scipy=1.7 \
-        scikit-learn=1.0 \
-        invoke=1.6 \
-        pre-commit=2.16 \
-        commitizen=2.20 \
-        dvc-s3=2.9 \
-        dvc-gdrive=2.9 \
-        jupyter_contrib_nbextensions=0.5 \
-    && mamba install --quiet --yes rise=5.7 \
+        invoke \
+        pre-commit \
+        commitizen \
+        dvc-s3 \
+        dvc-gdrive \
     && mamba clean --all -f -y \
     && npm cache clean --force
 
@@ -139,10 +130,7 @@ RUN julia -e 'using Pkg; Pkg.update()' \
                 PackageSpec(name="PlutoUI"), \
                 PackageSpec(name="DaemonMode"), \
                 PackageSpec(name="LocalCoverage"), \
-                PackageSpec(name="DataFrames"), \
-                PackageSpec(name="Markdown"), \
-                PackageSpec(name="Literate"), \
-                PackageSpec(name="LaTeXStrings"), \
+                PackageSpec(name="OkPkgTemplates"), \
             ] \
         ) \
     ' \
