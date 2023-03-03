@@ -184,6 +184,10 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # ">>": append
 
 # # CHECKPOINT: Temporary disable fix-permissions
+# (2023-3-3) Container successfully built but
+# (my-julia-space) pkg> dev FSDatasets
+#      Cloning git-repo `https://github.com/okatsn/FSDatasets.jl`
+# ERROR: IOError: could not spawn `'f()' '{' /home/jovyan/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /tmp/vscode-remote-containers-de4ebca6-e333-4bfa-b397-59900a3e2d17.js git-credential-helper '$*;' '};' f get`: no such file or directory (ENOENT)
 # RUN fix-permissions /home/$NB_USER
 
 # Pluto port
