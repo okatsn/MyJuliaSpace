@@ -58,9 +58,9 @@ RUN mkdir /opt/julia-${VARIANT} \
 
 
 
-
-
-
+# CHECKPOINT: I don't know why USER's GID is 1000, which is not 100  as here (https://hub.docker.com/layers/jupyter/minimal-notebook/ubuntu-22.04/images/sha256-a1b3973c6699351118799ad96b55c1fa71b186fa2a9983a4a63aa103905fb073?context=explore) or here (https://hub.docker.com/r/jupyter/base-notebook/dockerfile)
+# Add NB_USER to the group of NB_GID
+RUN usermod -g $NB_GID $NB_USER
 
 
 
@@ -188,7 +188,7 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # (my-julia-space) pkg> dev FSDatasets
 #      Cloning git-repo `https://github.com/okatsn/FSDatasets.jl`
 # ERROR: IOError: could not spawn `'f()' '{' /home/jovyan/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /tmp/vscode-remote-containers-de4ebca6-e333-4bfa-b397-59900a3e2d17.js git-credential-helper '$*;' '};' f get`: no such file or directory (ENOENT)
-# RUN fix-permissions /home/$NB_USER
+RUN fix-permissions /home/$NB_USER
 
 # Pluto port
 EXPOSE 1234
