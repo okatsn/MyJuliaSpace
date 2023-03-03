@@ -103,12 +103,13 @@ RUN conda env update --file environment.yml \
 # RUN pip uninstall -y cryptography \
 #     && pip install --upgrade cryptography==36.0.2
 
+# KEYNOTE: Pinned Version is successfully installed at 2023-03-03
 RUN mamba install --quiet --yes \
-        invoke \
-        pre-commit \
-        commitizen \
-        dvc-s3 \
-        dvc-gdrive \
+        invoke=2.0 \
+        pre-commit=3.1 \
+        commitizen=2.28 \
+        dvc-s3=2.21 \
+        dvc-gdrive=2.19 \
     && mamba clean --all -f -y \
     && npm cache clean --force
 
@@ -182,7 +183,8 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # ">" : overwrite
 # ">>": append
 
-RUN fix-permissions /home/$NB_USER
+# # CHECKPOINT: Temporary disable fix-permissions
+# RUN fix-permissions /home/$NB_USER
 
 # Pluto port
 EXPOSE 1234

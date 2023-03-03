@@ -6,9 +6,9 @@ dependencies:
   - mamba=1.3
   - conda==23.1
   - pip==23.0
-  # - ca-certificates=2021.10.8=ha878542_0
-  # - certifi=2021.10.8=py39hf3d152e_1
-  # - openssl=1.1.1s
+  - ca-certificates=2022.12.7=ha878542_0
+  - certifi=2022.12.7=pyhd8ed1ab_0
+  - openssl=3.0.8=h0b41bf4_0
   # - scipy=1.7
   # - scikit-learn=1.0
   # - numpy=1.21
