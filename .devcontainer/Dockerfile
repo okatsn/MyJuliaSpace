@@ -188,7 +188,12 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # (my-julia-space) pkg> dev FSDatasets
 #      Cloning git-repo `https://github.com/okatsn/FSDatasets.jl`
 # ERROR: IOError: could not spawn `'f()' '{' /home/jovyan/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /tmp/vscode-remote-containers-de4ebca6-e333-4bfa-b397-59900a3e2d17.js git-credential-helper '$*;' '};' f get`: no such file or directory (ENOENT)
-RUN sudo fix-permissions /home/$NB_USER
+
+
+# # CHECKPOINT: fix-permissions with sudo failed:
+# #  14/14] RUN sudo fix-permissions /home/jovyan:
+# # #0 0.686 find: argument to -group is empty, but should be a group name
+# RUN sudo fix-permissions /home/$NB_USER
 
 # Pluto port
 EXPOSE 1234
