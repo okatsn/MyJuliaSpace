@@ -5,7 +5,8 @@
 # https://github.com/MalteBoehm/julia_docker-compose_template/blob/main/Dockerfile
 
 # From dockerhub get an example image that you don't need to build your linux environment from scratch
-FROM jupyter/minimal-notebook:ubuntu-22.04
+FROM jupyter/minimal-notebook:python-3.10
+# https://hub.docker.com/layers/jupyter/minimal-notebook/python-3.10/images/sha256-ff7d41def49b6805cb40c0e570d0a0fa12131d1bb9377d7744935be561d16dc9?context=explore
 USER root
 
 
@@ -72,6 +73,7 @@ WORKDIR $PROJECT_DIR
 
 
 
+# Environments
 # TODO: CHECK!! use environment.yml, Project.toml and Manifest.toml to add python and julia packages
 COPY .devcontainer/environment.yml ${PROJECT_DIR}
 RUN conda env update --file environment.yml \
@@ -188,7 +190,8 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # (my-julia-space) pkg> dev FSDatasets
 #      Cloning git-repo `https://github.com/okatsn/FSDatasets.jl`
 # ERROR: IOError: could not spawn `'f()' '{' /home/jovyan/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /tmp/vscode-remote-containers-de4ebca6-e333-4bfa-b397-59900a3e2d17.js git-credential-helper '$*;' '};' f get`: no such file or directory (ENOENT)
-
+# RUN fix-permissions /home/$NB_USER
+# See also: [The fix-permissions script must be re-run on $HOME after various setup.](https://github.com/jupyter/docker-stacks/issues/547)
 
 # # CHECKPOINT: fix-permissions with sudo failed:
 # #  14/14] RUN sudo fix-permissions /home/jovyan:
