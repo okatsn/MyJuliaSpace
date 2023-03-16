@@ -142,6 +142,7 @@ RUN julia -e 'using Pkg; Pkg.update()' \
         Pkg.add(name="IJulia"); \
         using IJulia \
     '
+    # CHECKPOINT: OkRegistry will be added, but these packages disappears.
 
 ENV JULIA_PROJECT=@.
 
