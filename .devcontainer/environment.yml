@@ -2,7 +2,7 @@ name: base
 channels:
   - conda-forge
 dependencies:
-  - python=3.10
+  # - python=3.10
   # - mamba=1.3
   # - conda==23.1
   # - pip==23.0
@@ -10,6 +10,13 @@ dependencies:
   # - certifi=2022.12.7=pyhd8ed1ab_0
   # - openssl=3.0.8=h0b41bf4_0
   # CHECKPOINT
+  - python
+  - mamba
+  - conda
+  - pip
+  - ca-certificates
+  - certifi
+  - openssl
   # - scipy=1.7
   # - scikit-learn=1.0
   # - numpy=1.21
