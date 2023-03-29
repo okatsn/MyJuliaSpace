@@ -5,8 +5,9 @@
 # https://github.com/MalteBoehm/julia_docker-compose_template/blob/main/Dockerfile
 
 # From dockerhub get an example image that you don't need to build your linux environment from scratch
-FROM jupyter/minimal-notebook:python-3.10
-# https://hub.docker.com/layers/jupyter/minimal-notebook/python-3.10/images/sha256-ff7d41def49b6805cb40c0e570d0a0fa12131d1bb9377d7744935be561d16dc9?context=explore
+FROM jupyter/minimal-notebook:ubuntu-22.04
+# https://hub.docker.com/layers/jupyter/minimal-notebook/ubuntu-22.04/images/sha256-29356b566329099b855b046752dc3b1a303e97cf52a5a80f0782626ee25fa784?context=explore
+# it seems to be python 3.10
 USER root
 
 
