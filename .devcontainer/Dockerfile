@@ -108,11 +108,11 @@ RUN conda env update --file environment.yml \
 
 # KEYNOTE: Pinned Version is successfully installed at 2023-03-03
 RUN mamba install --quiet --yes \
-        invoke=2.0 \
-        pre-commit=3.1 \
-        commitizen=2.28 \
-        dvc-s3=2.21 \
-        dvc-gdrive=2.19 \
+        invoke \
+        pre-commit \
+        commitizen \
+        dvc-s3 \
+        dvc-gdrive \
     && mamba clean --all -f -y \
     && npm cache clean --force
 
