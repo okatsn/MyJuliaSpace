@@ -2,7 +2,7 @@
 version: '3'
 
 services:
-  dev: # service name is arbitrary
+  dev_j: # service name is arbitrary
     image: my-julia-space
     build:
       context: ..
