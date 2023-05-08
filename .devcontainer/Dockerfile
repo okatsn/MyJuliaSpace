@@ -46,10 +46,10 @@ ARG JULIA_PKG_DEVDIR="this.is.into.which.dev.clones.packages."
 ARG SUB_PROJECT_DIR="this.is.into.which.git.clones.any.repos."
 
 # Set enviroment variable
-# RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
-#     && export SUB_PROJECT_DIR=${SUB_PROJECT_DIR} \
 ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
     SUB_PROJECT_DIR=${SUB_PROJECT_DIR}
+# equivalent to:
+# RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
 
 # it should be defined here, despite it will overwritten by that in docker-compose.yml
 RUN mkdir /opt/julia-${VARIANT} \
@@ -92,7 +92,7 @@ RUN conda env update --file environment.yml \
 # TODO: write documentation in InstallJupyterLabWithoutAnaconda.md
 
 
-# KEYNOTE: In cases of AttributeError, (e.g., AttributeError: module 'lib' has no attribute 'OpenSSL_add_all_algorithms'), try the followings: 
+# KEYNOTE: In cases of AttributeError, (e.g., AttributeError: module 'lib' has no attribute 'OpenSSL_add_all_algorithms'), try the followings:
 # # [In the case where there is no attribute openssl](https://stackoverflow.com/questions/74980825/build-the-project-in-git-actions-using-sam-i-am-getting-new-error-attributeerr)
 # RUN pip install --upgrade pyopenssl
 # Similar issues:
