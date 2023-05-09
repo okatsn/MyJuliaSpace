@@ -5,7 +5,7 @@
 # https://github.com/MalteBoehm/julia_docker-compose_template/blob/main/Dockerfile
 
 # From dockerhub get an example image that you don't need to build your linux environment from scratch
-FROM jupyter/minimal-notebook:python-3.10
+FROM jupyter/minimal-notebook@sha256:b4f6e2ccd7af513254388fd11012c849e8e9461f643c34ddcf446dd99bd689a6
 # https://hub.docker.com/layers/jupyter/minimal-notebook/python-3.10/images/sha256-ff7d41def49b6805cb40c0e570d0a0fa12131d1bb9377d7744935be561d16dc9?context=explore
 USER root
 
@@ -70,14 +70,15 @@ USER $NB_USER
 WORKDIR $PROJECT_DIR
 
 
-
-
-
 # Environments
-# TODO: CHECK!! use environment.yml, Project.toml and Manifest.toml to add python and julia packages
-COPY .devcontainer/environment.yml ${PROJECT_DIR}
-RUN conda env update --file environment.yml \
-    && rm -f environment.yml
+# TODO: Use environment.yml, Project.toml and Manifest.toml to add python and julia packages
+
+# # KEYNOTE: disable conda env update if:
+# - UnsatisfiableError: The following specifications were found to be incompatible with a past
+# pinned spec python==3.10.10 conflicts with explicit specs. (by conda-forge)
+# COPY .devcontainer/environment.yml ${PROJECT_DIR}
+# RUN conda env update --file environment.yml \
+#     && rm -f environment.yml
 #     && mkdir -p ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`
 #     && cp Project.toml Manifest.toml ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`/Project.toml \
 #     && julia -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
