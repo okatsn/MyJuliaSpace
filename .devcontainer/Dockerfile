@@ -5,7 +5,7 @@
 # https://github.com/MalteBoehm/julia_docker-compose_template/blob/main/Dockerfile
 
 # From dockerhub get an example image that you don't need to build your linux environment from scratch
-FROM jupyter/minimal-notebook:python-3.10
+FROM jupyter/minimal-notebook
 # https://hub.docker.com/layers/jupyter/minimal-notebook/python-3.10/images/sha256-ff7d41def49b6805cb40c0e570d0a0fa12131d1bb9377d7744935be561d16dc9?context=explore
 USER root
 
@@ -46,10 +46,10 @@ ARG JULIA_PKG_DEVDIR="this.is.into.which.dev.clones.packages."
 ARG SUB_PROJECT_DIR="this.is.into.which.git.clones.any.repos."
 
 # Set enviroment variable
-# RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
-#     && export SUB_PROJECT_DIR=${SUB_PROJECT_DIR} \
 ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
     SUB_PROJECT_DIR=${SUB_PROJECT_DIR}
+# equivalent to:
+# RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
 
 # it should be defined here, despite it will overwritten by that in docker-compose.yml
 RUN mkdir /opt/julia-${VARIANT} \
@@ -70,14 +70,15 @@ USER $NB_USER
 WORKDIR $PROJECT_DIR
 
 
-
-
-
 # Environments
-# TODO: CHECK!! use environment.yml, Project.toml and Manifest.toml to add python and julia packages
-COPY .devcontainer/environment.yml ${PROJECT_DIR}
-RUN conda env update --file environment.yml \
-    && rm -f environment.yml
+# TODO: Use environment.yml, Project.toml and Manifest.toml to add python and julia packages
+
+# # KEYNOTE: disable conda env update if:
+# - UnsatisfiableError: The following specifications were found to be incompatible with a past
+# pinned spec python==3.10.10 conflicts with explicit specs. (by conda-forge)
+# COPY .devcontainer/environment.yml ${PROJECT_DIR}
+# RUN conda env update --file environment.yml \
+#     && rm -f environment.yml
 #     && mkdir -p ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`
 #     && cp Project.toml Manifest.toml ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`/Project.toml \
 #     && julia -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
@@ -92,7 +93,7 @@ RUN conda env update --file environment.yml \
 # TODO: write documentation in InstallJupyterLabWithoutAnaconda.md
 
 
-# KEYNOTE: In cases of AttributeError, (e.g., AttributeError: module 'lib' has no attribute 'OpenSSL_add_all_algorithms'), try the followings: 
+# KEYNOTE: In cases of AttributeError, (e.g., AttributeError: module 'lib' has no attribute 'OpenSSL_add_all_algorithms'), try the followings:
 # # [In the case where there is no attribute openssl](https://stackoverflow.com/questions/74980825/build-the-project-in-git-actions-using-sam-i-am-getting-new-error-attributeerr)
 # RUN pip install --upgrade pyopenssl
 # Similar issues:
