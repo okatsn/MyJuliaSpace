@@ -19,7 +19,6 @@ ARG PROJECT_DIR=/home/jovyan/whateverisoksinceitwillbeoverwritten
 # - In jupyter/base-notebook, WORKDIR is switched to $HOME; in jupyter/minimal-notebook, no WORKDIR switch action. The WORKDIR in previous building seems to be void in this stage.
 # - Make sure all things under /home/$NB_USER should be fix-permissions later.
 COPY .devcontainer/starship.toml /home/$NB_USER/.config/starship.toml
-RUN mkdir -p $HOME/.julia/config && cp .devcontainer/startup.jl "$_"
 
 
 # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
@@ -188,10 +187,6 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # ">>": append
 
 # # CHECKPOINT: Temporary disable fix-permissions
-# (2023-3-3) Container successfully built but
-# (my-julia-space) pkg> dev FSDatasets
-#      Cloning git-repo `https://github.com/okatsn/FSDatasets.jl`
-# ERROR: IOError: could not spawn `'f()' '{' /home/jovyan/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /tmp/vscode-remote-containers-de4ebca6-e333-4bfa-b397-59900a3e2d17.js git-credential-helper '$*;' '};' f get`: no such file or directory (ENOENT)
 # RUN fix-permissions /home/$NB_USER
 # See also: [The fix-permissions script must be re-run on $HOME after various setup.](https://github.com/jupyter/docker-stacks/issues/547)
 
@@ -199,6 +194,11 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # #  14/14] RUN sudo fix-permissions /home/jovyan:
 # # #0 0.686 find: argument to -group is empty, but should be a group name
 # RUN sudo fix-permissions /home/$NB_USER
+
+# RUN mkdir -p /home/$NB_USER/.julia/config && cp .devcontainer/startup.jl "$_" # This mkdir all necessary paths and copy files to there in one line. It worked in bash but failed in Dockerfile.
+RUN mkdir -p /home/$NB_USER/.julia/config
+COPY .devcontainer/startup.jl /home/$NB_USER/.julia/config/startup.jl
+# COPY startup.jl in the end to avoid permission error
 
 # Pluto port
 EXPOSE 1234
