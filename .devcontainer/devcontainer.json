@@ -15,7 +15,7 @@
         "donjayamanne.githistory",
         "github.vscode-pull-request-github",
         "eamodio.gitlens",
-        "mathieu.vscode-github-actions",
+        "github.vscode-github-actions", // "mathieu.vscode-github-actions",
         "ms-python.python",                        // python
         "ms-python.vscode-pylance",
         "editorconfig.editorconfig",               // vscode: use .editorconfig at PROJECT_DIR

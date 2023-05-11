@@ -19,7 +19,7 @@ ARG PROJECT_DIR=/home/jovyan/whateverisoksinceitwillbeoverwritten
 # - In jupyter/base-notebook, WORKDIR is switched to $HOME; in jupyter/minimal-notebook, no WORKDIR switch action. The WORKDIR in previous building seems to be void in this stage.
 # - Make sure all things under /home/$NB_USER should be fix-permissions later.
 COPY .devcontainer/starship.toml /home/$NB_USER/.config/starship.toml
-
+RUN mkdir -p $HOME/.julia/config && cp .devcontainer/startup.jl "$_"
 
 
 # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
