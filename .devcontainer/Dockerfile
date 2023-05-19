@@ -107,11 +107,13 @@ WORKDIR $PROJECT_DIR
 
 # KEYNOTE: Pinned Version is successfully installed at 2023-03-03
 RUN mamba install --quiet --yes \
+        ipywidgets=8.0.6 \
         invoke=2.0 \
         pre-commit=3.1 \
         commitizen=2.28 \
         dvc-s3=2.21 \
         dvc-gdrive=2.19 \
+        jupyter_contrib_nbextensions=0.7 \
     && mamba clean --all -f -y \
     && npm cache clean --force
 
@@ -126,29 +128,7 @@ ENV JULIA_PROJECT=@.
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
         using Pkg; \
-        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git")); \
-        Pkg.add( \
-            [ \
-                PackageSpec(name="Revise"), \
-                PackageSpec(name="BenchmarkTools"), \
-                PackageSpec(name="OhMyREPL"), \
-                PackageSpec(name="JuliaFormatter"), \
-                PackageSpec(name="Documenter"), \
-                PackageSpec(name="LiveServer"), \
-                PackageSpec(name="Pluto"), \
-                PackageSpec(name="PlutoUI"), \
-                PackageSpec(name="DaemonMode"), \
-                PackageSpec(name="LocalCoverage"), \
-                PackageSpec(name="OkPkgTemplates"), \
-            ] \
-        ) \
-    ' \
-    && julia -e ' \
-        using Pkg; \
-        Pkg.add(name="IJulia"); \
-        using IJulia \
-    '
-
+        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))'
 
 # Avoid VS Code extension reinstalls
 # https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
