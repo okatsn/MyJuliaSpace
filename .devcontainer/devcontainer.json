@@ -40,6 +40,10 @@
         "mkvoya.eps-preview"
     ],
     "settings": {
+        "python.defaultInterpreterPath": "/opt/conda/bin/python", // this is for quarto to correctly work with VSCode. 
+        // See: 
+        // https://code.visualstudio.com/docs/python/environments  
+        // 
         "julia.environmentPath": "/home/jovyan/my-julia-space",
         "[julia]": {
             // https://github.com/invenia/BlueStyle#vs-code-settings
