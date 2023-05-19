@@ -107,11 +107,14 @@ WORKDIR $PROJECT_DIR
 
 # KEYNOTE: Pinned Version is successfully installed at 2023-03-03
 RUN mamba install --quiet --yes \
+        ipywidgets=8.0.6 \
         invoke=2.0 \
         pre-commit=3.1 \
         commitizen=2.28 \
         dvc-s3=2.21 \
         dvc-gdrive=2.19 \
+        jupyter_contrib_nbextensions=0.7 \
+    && mamba install --quiet --yes rise=5.7 \
     && mamba clean --all -f -y \
     && npm cache clean --force
 
