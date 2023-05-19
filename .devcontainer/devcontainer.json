@@ -39,6 +39,7 @@
         "mkvoya.eps-preview"
     ],
     "settings": {
+        "julia.useRevise": true, 
         "julia.environmentPath": "/home/jovyan/my-julia-space",
         "[julia]": {
             // https://github.com/invenia/BlueStyle#vs-code-settings
