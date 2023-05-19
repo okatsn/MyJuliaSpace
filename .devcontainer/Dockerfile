@@ -117,6 +117,12 @@ RUN mamba install --quiet --yes \
 
 # Add julia packages and precompile
 # NOTE: These packages will be added under @#.# (e.g. @v1.6)
+
+ENV JULIA_PROJECT=@.
+    # CHECKPOINT: OkRegistry will be added, but these packages disappears.
+    # try to fix this problem by moving it to the front
+
+
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
         using Pkg; \
@@ -142,9 +148,7 @@ RUN julia -e 'using Pkg; Pkg.update()' \
         Pkg.add(name="IJulia"); \
         using IJulia \
     '
-    # CHECKPOINT: OkRegistry will be added, but these packages disappears.
 
-ENV JULIA_PROJECT=@.
 
 # Avoid VS Code extension reinstalls
 # https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
