@@ -31,13 +31,19 @@ RUN apt-get update \
         jq \
         ghostscript \
         pdf2svg \
+        gdebi-core\
     && echo $NB_USER ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$NB_USER \
     && chmod 0440 /etc/sudoers.d/$NB_USER \
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
     # ghostscript for handling eps image files
     # pdf2svg is for vscode eps-preview extension
+    # gdebi-core is for install deb file
 
+# Install quarto
+# See: https://www.r-bloggers.com/2022/07/how-to-set-up-quarto-with-docker-part-1-static-content/
+RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
+RUN gdebi --non-interactive quarto-linux-amd64.deb
 
 # Install Julia
 ARG VARIANT="what.ever.is.ok.since.it.will.be.overwritten.by.that.in.docker-compose.yml"

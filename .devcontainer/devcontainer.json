@@ -20,6 +20,7 @@
         "ms-python.vscode-pylance",
         "editorconfig.editorconfig",               // vscode: use .editorconfig at PROJECT_DIR
         "shd101wyy.markdown-preview-enhanced",     // markdown
+        "quarto.quarto",
         "streetsidesoftware.code-spell-checker",   // other code
         "redhat.vscode-yaml",
         "bungcip.better-toml",
@@ -40,6 +41,10 @@
     ],
     "settings": {
         "julia.useRevise": true, 
+        "python.defaultInterpreterPath": "/opt/conda/bin/python", // this is for quarto to correctly work with VSCode. 
+        // See: 
+        // https://code.visualstudio.com/docs/python/environments  
+        // 
         "julia.environmentPath": "/home/jovyan/my-julia-space",
         "[julia]": {
             // https://github.com/invenia/BlueStyle#vs-code-settings
@@ -72,6 +77,7 @@
             "dvc.lock": "yaml"
         },
         "editor.occurrencesHighlight": true, // highlight at same words where cursor is on
-        "editor.selectionHighlight": false // highlight at same words selected
+        "editor.selectionHighlight": false, // highlight at same words selected
+        "quarto.render.renderOnSave": true
     }
 }
