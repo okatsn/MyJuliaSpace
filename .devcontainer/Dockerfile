@@ -120,7 +120,6 @@ RUN mamba install --quiet --yes \
         dvc-s3=2.21 \
         dvc-gdrive=2.19 \
         jupyter_contrib_nbextensions=0.7 \
-    && mamba install --quiet --yes rise=5.7 \
     && mamba clean --all -f -y \
     && npm cache clean --force
 
@@ -135,7 +134,7 @@ ENV JULIA_PROJECT=@.
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
         using Pkg; \
-        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))
+        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))'
 
 # Avoid VS Code extension reinstalls
 # https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
