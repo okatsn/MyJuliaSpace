@@ -41,7 +41,9 @@ RUN apt-get update \
     # gdebi-core is for install deb file
 
 # Install quarto
-# See: https://www.r-bloggers.com/2022/07/how-to-set-up-quarto-with-docker-part-1-static-content/
+# See: 
+# - https://www.r-bloggers.com/2022/07/how-to-set-up-quarto-with-docker-part-1-static-content/
+# - https://docs.posit.co/resources/install-quarto/#quarto-deb-file-install
 RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 RUN gdebi --non-interactive quarto-linux-amd64.deb
 
@@ -134,7 +136,13 @@ ENV JULIA_PROJECT=@.
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
         using Pkg; \
-        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))'
+        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))' \
+    && julia -e ' \
+        using Pkg; \
+        Pkg.add(name="IJulia"); \
+        Pkg.build("IJulia") \
+    '
+# build IJulia is required to make any jupyter related functions such as quarto
 
 # Avoid VS Code extension reinstalls
 # https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls

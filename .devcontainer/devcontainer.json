@@ -44,7 +44,7 @@
         "python.defaultInterpreterPath": "/opt/conda/bin/python", // this is for quarto to correctly work with VSCode. 
         // See: 
         // https://code.visualstudio.com/docs/python/environments  
-        // 
+        // https://discourse.julialang.org/t/jupyter-kernel-not-found-when-rendering-with-quarto/86205
         "julia.environmentPath": "/home/jovyan/my-julia-space",
         "[julia]": {
             // https://github.com/invenia/BlueStyle#vs-code-settings
