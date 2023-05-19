@@ -126,29 +126,7 @@ ENV JULIA_PROJECT=@.
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
         using Pkg; \
-        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git")); \
-        Pkg.add( \
-            [ \
-                PackageSpec(name="Revise"), \
-                PackageSpec(name="BenchmarkTools"), \
-                PackageSpec(name="OhMyREPL"), \
-                PackageSpec(name="JuliaFormatter"), \
-                PackageSpec(name="Documenter"), \
-                PackageSpec(name="LiveServer"), \
-                PackageSpec(name="Pluto"), \
-                PackageSpec(name="PlutoUI"), \
-                PackageSpec(name="DaemonMode"), \
-                PackageSpec(name="LocalCoverage"), \
-                PackageSpec(name="OkPkgTemplates"), \
-            ] \
-        ) \
-    ' \
-    && julia -e ' \
-        using Pkg; \
-        Pkg.add(name="IJulia"); \
-        using IJulia \
-    '
-
+        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))
 
 # Avoid VS Code extension reinstalls
 # https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
