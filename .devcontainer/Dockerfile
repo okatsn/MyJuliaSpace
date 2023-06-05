@@ -132,9 +132,6 @@ RUN mamba install --quiet --yes \
 # NOTE: These packages will be added under @#.# (e.g. @v1.6)
 
 ENV JULIA_PROJECT=@.
-    # CHECKPOINT: OkRegistry will be added, but these packages disappears.
-    # try to fix this problem by moving it to the front
-
 
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
@@ -145,7 +142,8 @@ RUN julia -e 'using Pkg; Pkg.update()' \
         Pkg.add(name="IJulia"); \
         Pkg.build("IJulia") \
     '
-# build IJulia is required to make any jupyter related functions such as quarto
+    # build IJulia is required to make any jupyter related functions such as quarto
+    # Add other default packages using an Project.toml
 
 # Avoid VS Code extension reinstalls
 # https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
@@ -196,6 +194,7 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # # #0 0.686 find: argument to -group is empty, but should be a group name
 # RUN sudo fix-permissions /home/$NB_USER
 
+# # KEYNOTE: For OhMyREPL etc.
 # RUN mkdir -p /home/$NB_USER/.julia/config && cp .devcontainer/startup.jl "$_" # This mkdir all necessary paths and copy files to there in one line. It worked in bash but failed in Dockerfile.
 RUN mkdir -p /home/$NB_USER/.julia/config
 COPY .devcontainer/startup.jl /home/$NB_USER/.julia/config/startup.jl
