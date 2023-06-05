@@ -8,7 +8,7 @@
     "shutdownAction": "stopCompose",
     "workspaceFolder": "/home/jovyan/my-julia-space",
     "extensions": [
-        // Common Extensions
+        // KEYNOTE: Common Extensions
         "gruntfuggly.todo-tree",
         "streetsidesoftware.code-spell-checker",
         "mhutchie.git-graph", // GIT and GITHUB
@@ -33,53 +33,28 @@
         "ms-azuretools.vscode-docker", // Docker
         "editorconfig.editorconfig", // vscode: use .editorconfig at WORKSPACE_DIR
         "redhat.vscode-yaml",
-        // MyJuliaSpace Exclusive
-        "julialang.language-julia",                // julia
+        // SECTION: MyJuliaSpace Exclusive
+        "julialang.language-julia", // julia
         "colinfang.markdown-julia",
-        "ms-python.python",                        // python
+        "ms-python.python", // python
         "ms-python.vscode-pylance",
         "quarto.quarto",
         "bungcip.better-toml"
     ],
     "settings": {
-        "julia.useRevise": true, 
+        "gitProjectManager.baseProjectsFolders": [
+            "~/my-julia-space",
+            "~/.julia/dev"
+        ], // this allows GPM (felipecaputo.git-project-manager) to open repo in the "projects" in a new window  
+        // "~/" is equivalent to "/home/jovyan/"
+        //
+        "julia.useRevise": true,
         "python.defaultInterpreterPath": "/opt/conda/bin/python", // this is for quarto to correctly work with VSCode. 
         // See: 
         // https://code.visualstudio.com/docs/python/environments  
         // https://discourse.julialang.org/t/jupyter-kernel-not-found-when-rendering-with-quarto/86205
         "julia.environmentPath": "/home/jovyan/my-julia-space",
-        "[julia]": {
-            // https://github.com/invenia/BlueStyle#vs-code-settings
-            "editor.detectIndentation": false,
-            "editor.insertSpaces": true,
-            "editor.tabSize": 4,
-            "files.insertFinalNewline": true,
-            "files.trimFinalNewlines": true,
-            "files.trimTrailingWhitespace": true,
-            "editor.selectionHighlight": true,
-            "editor.rulers": [
-                92
-            ]
-        },
-        // html colors
-        "color-highlight.markerType": "dot-before",
-        "color-manager.autoStartIntellisense": true,
-        "gitProjectManager.baseProjectsFolders": [
-            "~/my-julia-space", "~/.julia/dev"
-            ], // this allows GPM (felipecaputo.git-project-manager) to open repo in the "projects" in a new window  
-            // "~/" is equivalent to "/home/jovyan/"
-        "python.terminal.activateEnvironment": false,
-        "git.checkoutType": [
-            "local",
-            // "remote",
-            "tags"
-        ],
-        "files.associations": {
-            "*.dvc": "yaml",
-            "dvc.lock": "yaml"
-        },
-        "editor.occurrencesHighlight": true, // highlight at same words where cursor is on
-        "editor.selectionHighlight": false, // highlight at same words selected
-        "quarto.render.renderOnSave": true
+        "python.terminal.activateEnvironment": false
+        // KEYNOTE: For general settings, please Other settings please refer https://github.com/okatsn/MyVSCodeSettings
     }
 }
