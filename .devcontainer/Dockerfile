@@ -1,14 +1,3 @@
-# Once it is successfully built, commit and push the image as follows:
-# - in wsl, `docker container list` to get the CONTAINER_ID (also in Docker Desktop > tab "Containers" in the droplist of myjuliaspace_devcontainer) 
-# - in wsl, `docker commit CONTAINER_ID user/repo` 
-#     - e.g., `docker commit 3935a2cd9ee6 okatsn/my-julia-space`
-# - in wsl, `docker image push okatsn/my-julia-space`
-#
-# To use the image:
-# - in .devcontainer/Dockerfile, with `FROM okatsn/my-julia-space`
-# - add .devcontainer/docker-compose.yml
-# - add .devcontainer/devcontainer.json
-#
 # TODOs:
 # - auto pairing for .qmd (``, ...) (auto closing works fine)
 
