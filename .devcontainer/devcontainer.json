@@ -48,7 +48,6 @@
         ], // this allows GPM (felipecaputo.git-project-manager) to open repo in the "projects" in a new window  
         // "~/" is equivalent to "/home/jovyan/"
         //
-        "julia.useRevise": true,
         "python.defaultInterpreterPath": "/opt/conda/bin/python", // this is for quarto to correctly work with VSCode. 
         // See: 
         // https://code.visualstudio.com/docs/python/environments  
