@@ -1,5 +1,5 @@
 # Once it is successfully built, commit and push the image as follows:
-# - in wsl, `docker container list` to get the CONTAINER_ID
+# - in wsl, `docker container list` to get the CONTAINER_ID (also in Docker Desktop > tab "Containers" in the droplist of myjuliaspace_devcontainer) 
 # - in wsl, `docker commit CONTAINER_ID user/repo` 
 #     - e.g., `docker commit 3935a2cd9ee6 okatsn/my-julia-space`
 # - in wsl, `docker image push okatsn/my-julia-space`
@@ -18,8 +18,7 @@
 # https://github.com/marius311/CMBLensing.jl/blob/master/Dockerfile
 # https://github.com/MalteBoehm/julia_docker-compose_template/blob/main/Dockerfile
 
-
-FROM jupyter/minimal-notebook
+FROM jupyter/minimal-notebook:python-3.10
 # From dockerhub get an example image that you don't need to build your linux environment from scratch
 # https://hub.docker.com/layers/jupyter/minimal-notebook/python-3.10/images/sha256-ff7d41def49b6805cb40c0e570d0a0fa12131d1bb9377d7744935be561d16dc9?context=explore
 USER root
@@ -28,7 +27,7 @@ USER root
 # RUN echo $("ls")
 # To see where am I
 
-ARG PROJECT_DIR=/home/jovyan/whateverisoksinceitwillbeoverwritten
+ARG WORKSPACE_DIR=/home/jovyan/whateverisoksinceitwillbeoverwritten
 ## Starship configuration
 # - The current building context (see docker-compose.yml) is ".." (the parent folder of Dockerfile); thus .devcontainer/starship.toml is the right directory
 # - In jupyter/base-notebook, WORKDIR is switched to $HOME; in jupyter/minimal-notebook, no WORKDIR switch action. The WORKDIR in previous building seems to be void in this stage.
@@ -89,7 +88,7 @@ RUN mkdir /opt/julia-${VARIANT} \
 
 # NB_USER is defined in jupyter/minimal-notebook
 USER $NB_USER
-WORKDIR $PROJECT_DIR
+WORKDIR $WORKSPACE_DIR
 
 
 # Environments
@@ -98,7 +97,7 @@ WORKDIR $PROJECT_DIR
 # # KEYNOTE: disable conda env update if:
 # - UnsatisfiableError: The following specifications were found to be incompatible with a past
 # pinned spec python==3.10.10 conflicts with explicit specs. (by conda-forge)
-# COPY .devcontainer/environment.yml ${PROJECT_DIR}
+# COPY .devcontainer/environment.yml ${WORKSPACE_DIR}
 # RUN conda env update --file environment.yml \
 #     && rm -f environment.yml
 #     && mkdir -p ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`
@@ -130,7 +129,7 @@ WORKDIR $PROJECT_DIR
 
 # KEYNOTE: Pinned Version is successfully installed at 2023-03-03
 RUN mamba install --quiet --yes \
-        ipywidgets=8.0.6 \
+        ipywidgets=8.0 \
         invoke=2.0 \
         pre-commit=3.1 \
         commitizen=2.28 \

@@ -18,7 +18,7 @@
         "github.vscode-github-actions", // "mathieu.vscode-github-actions",
         "ms-python.python",                        // python
         "ms-python.vscode-pylance",
-        "editorconfig.editorconfig",               // vscode: use .editorconfig at PROJECT_DIR
+        "editorconfig.editorconfig",               // vscode: use .editorconfig at WORKSPACE_DIR
         "shd101wyy.markdown-preview-enhanced",     // markdown
         "quarto.quarto",
         "streetsidesoftware.code-spell-checker",   // other code
