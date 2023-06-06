@@ -20,6 +20,7 @@ services:
       # https://cheaster.blogspot.com/2020/06/docker-composeyml-container-timezone.html
       - TZ=Asia/Taipei
     volumes:
+      # KEYNOTE: files in volumes will not be part of the image; you can push the image safely even if there are sensitive informations in volumes
       # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
       - ..:/home/jovyan/my-julia-space
       # # KEYNOTE: Define volumes in service
