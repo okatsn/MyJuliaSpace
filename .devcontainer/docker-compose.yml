@@ -2,7 +2,8 @@
 version: '3'
 
 services:
-  devj: # service name is arbitrary
+  devj:
+    # service name is arbitrary
     image: my-julia-space
     build:
       context: ..
@@ -21,16 +22,19 @@ services:
     volumes:
       # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
       - ..:/home/jovyan/my-julia-space
+      # # KEYNOTE: Define volumes in service
       # Persistent the julia depot
       - julia-depot:/home/jovyan/.julia
-      # Avoid reinstall vscode extensions
+      # # Avoid reinstall vscode extensions
+      # KEYNOTE: make sure /home/$NB_USER/.vscode-server/extensions is `mkdir`ed in Dockerfile
       - vscode-extensions:/home/jovyan/.vscode-server/extensions
       # Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker-compose for details.
       # - /var/run/docker.sock:/var/run/docker.sock
-    # Overrides default command so things don't shut down after the process ends.
+      # Overrides default command so things don't shut down after the process ends.
     command: sh -c "sleep infinity"
     # KEYNOTE: If you didn't have env.py in tasks/, an error will occurred executing this command; thus there is nothing running and container will shut down immediatedly after it starts
 
 volumes:
+  # KEYNOTE: Those defined volumes in service should be declared in the root level
   julia-depot:
   vscode-extensions:

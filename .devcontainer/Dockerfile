@@ -27,21 +27,21 @@ COPY .devcontainer/starship.toml /home/$NB_USER/.config/starship.toml
 # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        sudo \
-        curl \
-        bash-completion \
-        lcov \
-        jq \
-        ghostscript \
-        pdf2svg \
-        gdebi-core\
+    sudo \
+    curl \
+    bash-completion \
+    lcov \
+    jq \
+    ghostscript \
+    pdf2svg \
+    gdebi-core\
     && echo $NB_USER ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$NB_USER \
     && chmod 0440 /etc/sudoers.d/$NB_USER \
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
-    # ghostscript for handling eps image files
-    # pdf2svg is for vscode eps-preview extension
-    # gdebi-core is for install deb file
+# ghostscript for handling eps image files
+# pdf2svg is for vscode eps-preview extension
+# gdebi-core is for install deb file
 
 # Install quarto
 # See: 
@@ -118,13 +118,13 @@ WORKDIR $WORKSPACE_DIR
 
 # KEYNOTE: Pinned Version is successfully installed at 2023-03-03
 RUN mamba install --quiet --yes \
-        ipywidgets=8.0 \
-        invoke=2.0 \
-        pre-commit=3.1 \
-        commitizen=2.28 \
-        dvc-s3=2.21 \
-        dvc-gdrive=2.19 \
-        jupyter_contrib_nbextensions=0.7 \
+    ipywidgets=8.0 \
+    invoke=2.0 \
+    pre-commit=3.1 \
+    commitizen=2.28 \
+    dvc-s3=2.21 \
+    dvc-gdrive=2.19 \
+    jupyter_contrib_nbextensions=0.7 \
     && mamba clean --all -f -y \
     && npm cache clean --force
 
@@ -135,40 +135,42 @@ ENV JULIA_PROJECT=@.
 
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
-        using Pkg; \
-        Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))' \
+    using Pkg; \
+    Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))' \
     && julia -e ' \
-        using Pkg; \
-        Pkg.add(name="IJulia"); \
-        Pkg.build("IJulia") \
+    using Pkg; \
+    Pkg.add(name="IJulia"); \
+    Pkg.build("IJulia") \
     '
-    # build IJulia is required to make any jupyter related functions such as quarto
-    # Add other default packages using an Project.toml
+# build IJulia is required to make any jupyter related functions such as quarto
+# Add other default packages using an Project.toml
 
-# Avoid VS Code extension reinstalls
-# https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
+# Avoid VS Code extension reinstalls. For more information, see
+# - https://github.com/microsoft/vscode-remote-release/issues/7690
+# - https://code.visualstudio.com/remote/advancedcontainers/overview#_advanced-containers-topics
+# - https://code.visualstudio.com/docs/devcontainers/containers#_create-a-devcontainerjson-file
 RUN mkdir -p /home/$NB_USER/.vscode-server/extensions \
-        /home/$NB_USER/.vscode-server-insiders/extensions \
-        $SUB_PROJECT_DIR \
+    /home/$NB_USER/.vscode-server-insiders/extensions \
+    $SUB_PROJECT_DIR \
     && chown -R $NB_USER \
-        /home/$NB_USER/.vscode-server \
-        /home/$NB_USER/.vscode-server-insiders
+    /home/$NB_USER/.vscode-server \
+    /home/$NB_USER/.vscode-server-insiders
 
 # Jupyter settings
 RUN mkdir -p /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/notebook-extension \
     && echo '{"codeCellConfig": {"lineNumbers": true}}' | jq\
-        >> /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/notebook-extension/tracker.jupyterlab-settings \
+    >> /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/notebook-extension/tracker.jupyterlab-settings \
     && mkdir -p /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension \
     && echo '{"shortcuts": [{"command": "runmenu:restart-and-run-all", "keys": ["Alt R"], "selector": "[data-jp-code-runner]"}]}' | jq\
-        >> /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension/shortcuts.jupyterlab-settings \
+    >> /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension/shortcuts.jupyterlab-settings \
     && mkdir -p /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/apputils-extension \
     && echo '{"modal": false}' | jq\
-        >> /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/palette.jupyterlab-settings \
+    >> /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/palette.jupyterlab-settings \
     && mkdir -p /home/$NB_USER/.jupyter/nbconfig \
     && echo '{"nbext_hide_incompat": false}' | jq \
-        >> /home/$NB_USER/.jupyter/nbconfig/commom.json \
+    >> /home/$NB_USER/.jupyter/nbconfig/commom.json \
     && echo '{"load_extensions": {"toc2/main": true}, "rise": {"scroll": true, "enable_chalkboard": true}}' | jq \
-        >> /home/$NB_USER/.jupyter/nbconfig/notebook.json
+    >> /home/$NB_USER/.jupyter/nbconfig/notebook.json
 
 # Shell completion and alias
 RUN inv --print-completion-script bash > ~/.invoke-completion.sh \
