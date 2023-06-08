@@ -198,6 +198,7 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 
 # # KEYNOTE: For OhMyREPL etc.
 # RUN mkdir -p /home/$NB_USER/.julia/config && cp .devcontainer/startup.jl "$_" # This mkdir all necessary paths and copy files to there in one line. It worked in bash but failed in Dockerfile.
+# KEYNOTE: use $HOME instead of /home/$NB_USER will fail! Since $HOME is not recognized as absolute directory!
 RUN mkdir -p /home/$NB_USER/.julia/config
 COPY .devcontainer/startup.jl /home/$NB_USER/.julia/config/startup.jl
 # COPY startup.jl in the end to avoid permission error
