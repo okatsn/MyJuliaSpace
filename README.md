@@ -44,7 +44,7 @@ Push committed image
 - By default it pushes the image with the tag of `latest`.
 
 Push the image with the `helloworld` tag:
-- `docker image push okatsn/my-tex-life-with-julia:helloworld`
+- `docker image push okatsn/my-julia-space:helloworld`
 
 #### To use the image:
 - in .devcontainer/Dockerfile, with `FROM okatsn/my-julia-space`
