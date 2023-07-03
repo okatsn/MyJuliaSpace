@@ -10,9 +10,9 @@ services:
       dockerfile: .devcontainer/Dockerfile
       args:
         VARIANT: "1.9.1"
-        WORKSPACE_DIR: /home/jovyan/my-julia-space #can be arbitrary; it's not required to be identical with the project directory in your WSL unbuntu (20.04)
+        WORKSPACE_DIR: /home/jovyan/workspace #can be arbitrary; it's not required to be identical with the project directory in your WSL unbuntu (20.04)
         JULIA_PKG_DEVDIR: /home/jovyan/.julia/dev # just let it be default. See [JULIA_PKG_DEVDIR](https://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_PKG_DEVDIR). Be aware that some tests will depend on JULIA_PKG_DEVDIR.
-        SUB_PROJECT_DIR: /home/jovyan/my-julia-space/subprojects # KEYNOTE: also check "gitProjectManager.baseProjectsFolders" in devcontainer.json that if GPM can get JULIA_PKG_DEVDIR and SUB_PROJECT_DIR
+        SUB_PROJECT_DIR: /home/jovyan/workspace/subprojects # KEYNOTE: also check "gitProjectManager.baseProjectsFolders" in devcontainer.json that if GPM can get JULIA_PKG_DEVDIR and SUB_PROJECT_DIR
         VSCODE_PATH: /home/jovyan/.vscode-server
         VSCODE_INSIDER_PATH: /home/jovyan/.vscode-server-insiders
     init: true
@@ -24,7 +24,7 @@ services:
     volumes:
       # KEYNOTE: files in volumes will not be part of the image; you can push the image safely even if there are sensitive informations in volumes
       # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
-      - ..:/home/jovyan/my-julia-space
+      - ..:/home/jovyan/workspace
       # # KEYNOTE: Define volumes in service
       # Persistent the julia depot
       - julia-depot:/home/jovyan/.julia

@@ -6,7 +6,7 @@
     "dockerComposeFile": "docker-compose.yml",
     "service": "devj",
     "shutdownAction": "stopCompose",
-    "workspaceFolder": "/home/jovyan/my-julia-space",
+    "workspaceFolder": "/home/jovyan/workspace",
     "customizations": {
         "vscode": {
             // Set *default* container specific settings.json values on container create.
@@ -23,7 +23,7 @@
             ],
             "settings": {
                 "gitProjectManager.baseProjectsFolders": [
-                    "~/my-julia-space",
+                    "~/workspace",
                     "~/.julia/dev"
                 ], // this allows GPM (felipecaputo.git-project-manager) to open repo in the "projects" in a new window  
                 // "~/" is equivalent to "/home/jovyan/"
@@ -32,7 +32,7 @@
                 // See: 
                 // https://code.visualstudio.com/docs/python/environments  
                 // https://discourse.julialang.org/t/jupyter-kernel-not-found-when-rendering-with-quarto/86205
-                "julia.environmentPath": "/home/jovyan/my-julia-space",
+                "julia.environmentPath": "/home/jovyan/workspace",
                 "python.terminal.activateEnvironment": false,
                 // KEYNOTE: For general settings, please Other settings please refer https://github.com/okatsn/MyVSCodeSettings
                 "dev.containers.cacheVolume": false
