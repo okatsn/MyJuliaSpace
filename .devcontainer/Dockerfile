@@ -54,10 +54,14 @@ RUN gdebi --non-interactive quarto-linux-amd64.deb
 ARG VARIANT="what.ever.is.ok.since.it.will.be.overwritten.by.that.in.docker-compose.yml"
 ARG JULIA_PKG_DEVDIR="this.is.into.which.dev.clones.packages."
 ARG SUB_PROJECT_DIR="this.is.into.which.git.clones.any.repos."
+ARG VSCODE_PATH="Foo"
+ARG VSCODE_INSIDER_PATH="Bar"
 
 # Set enviroment variable
 ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
-    SUB_PROJECT_DIR=${SUB_PROJECT_DIR}
+    SUB_PROJECT_DIR=${SUB_PROJECT_DIR} \
+    VSCODE_PATH=${VSCODE_PATH} \
+    VSCODE_INSIDER_PATH=${VSCODE_INSIDER_PATH}
 # equivalent to:
 # RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
 
@@ -142,6 +146,7 @@ RUN julia -e 'using Pkg; Pkg.update()' \
     Pkg.add(name="IJulia"); \
     Pkg.build("IJulia") \
     '
+
 # build IJulia is required to make any jupyter related functions such as quarto
 # Add other default packages using an Project.toml
 
@@ -149,12 +154,13 @@ RUN julia -e 'using Pkg; Pkg.update()' \
 # - https://github.com/microsoft/vscode-remote-release/issues/7690
 # - https://code.visualstudio.com/remote/advancedcontainers/overview#_advanced-containers-topics
 # - https://code.visualstudio.com/docs/devcontainers/containers#_create-a-devcontainerjson-file
-RUN mkdir -p /home/$NB_USER/.vscode-server/extensions \
-    /home/$NB_USER/.vscode-server-insiders/extensions \
+
+RUN mkdir -p $VSCODE_PATH/extensions \
+    $VSCODE_INSIDER_PATH/extensions \
     $SUB_PROJECT_DIR \
     && chown -R $NB_USER \
-    /home/$NB_USER/.vscode-server \
-    /home/$NB_USER/.vscode-server-insiders
+    $VSCODE_PATH \
+    $VSCODE_INSIDER_PATH
 
 # Jupyter settings
 RUN mkdir -p /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/notebook-extension \
@@ -190,11 +196,6 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # # CHECKPOINT: Temporary disable fix-permissions
 # RUN fix-permissions /home/$NB_USER
 # See also: [The fix-permissions script must be re-run on $HOME after various setup.](https://github.com/jupyter/docker-stacks/issues/547)
-
-# # CHECKPOINT: fix-permissions with sudo failed:
-# #  14/14] RUN sudo fix-permissions /home/jovyan:
-# # #0 0.686 find: argument to -group is empty, but should be a group name
-# RUN sudo fix-permissions /home/$NB_USER
 
 # # KEYNOTE: For OhMyREPL etc.
 # RUN mkdir -p /home/$NB_USER/.julia/config && cp .devcontainer/startup.jl "$_" # This mkdir all necessary paths and copy files to there in one line. It worked in bash but failed in Dockerfile.
