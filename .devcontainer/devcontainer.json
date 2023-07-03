@@ -9,32 +9,10 @@
     "workspaceFolder": "/home/jovyan/my-julia-space",
     "customizations": {
         "vscode": {
+            // Set *default* container specific settings.json values on container create.
+            // See https://containers.dev/supporting
             "extensions": [
-                // KEYNOTE: Common Extensions
-                // "gruntfuggly.todo-tree",
-                "streetsidesoftware.code-spell-checker",
-                "mhutchie.git-graph", // GIT and GITHUB
-                "donjayamanne.githistory",
-                "github.vscode-pull-request-github",
-                "felipecaputo.git-project-manager",
-                "eamodio.gitlens",
-                "mathieu.vscode-github-actions",
-                "shardulm94.trailing-spaces", // format and highlight
-                "christian-kohler.path-intellisense",
-                "naumovs.color-highlight", // html colors
-                "royaction.color-manager",
-                "shd101wyy.markdown-preview-enhanced", // markdown
-                "yzhang.markdown-all-in-one",
-                "tomashubelbauer.vscode-markdown-table-format",
-                "joffreykern.markdown-toc",
-                "bierner.emojisense", // emoji
-                "wdawson.better-kill-ring", // other
-                "ms-vscode.live-server",
-                "mutantdino.resourcemonitor",
-                "mkvoya.eps-preview",
-                "ms-azuretools.vscode-docker", // Docker
-                "editorconfig.editorconfig", // vscode: use .editorconfig at WORKSPACE_DIR
-                "redhat.vscode-yaml",
+                // KEYNOTE: Please refer "dev.containers.defaultExtensions" in  settings.json (Ctrl+Shift+P and Open User Settings (JSON)) for Common Extensions
                 // SECTION: MyJuliaSpace Exclusive
                 "julialang.language-julia", // julia
                 "colinfang.markdown-julia",
@@ -55,8 +33,10 @@
                 // https://code.visualstudio.com/docs/python/environments  
                 // https://discourse.julialang.org/t/jupyter-kernel-not-found-when-rendering-with-quarto/86205
                 "julia.environmentPath": "/home/jovyan/my-julia-space",
-                "python.terminal.activateEnvironment": false
+                "python.terminal.activateEnvironment": false,
                 // KEYNOTE: For general settings, please Other settings please refer https://github.com/okatsn/MyVSCodeSettings
+                "dev.containers.cacheVolume": false
+                // to apply your extensions and settings in .devcontainer/devcontainer.json without cache.
             }
         }
     }
