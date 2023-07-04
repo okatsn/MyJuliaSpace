@@ -42,6 +42,8 @@ services:
 
 volumes:
   # KEYNOTE: Those defined volumes in service should be declared in the root level
+  # - vscode-server are binded because I don't want them be in the image (which might cause permission issues when FROM my-julia-space that a new set of extensions is intended to be installed in container building stage)
+  # - Don't bind vscode-server if you like your container has extensions installed as prescripted in devcontainer.json
   julia-depot:
   vscode-server:
   vscode-server-insiders:

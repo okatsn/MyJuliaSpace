@@ -35,8 +35,8 @@
                 "julia.environmentPath": "/home/jovyan/devspace",
                 "python.terminal.activateEnvironment": false,
                 // KEYNOTE: For general settings, please Other settings please refer https://github.com/okatsn/MyVSCodeSettings
-                "dev.containers.cacheVolume": false
-                // to apply your extensions and settings in .devcontainer/devcontainer.json without cache.
+                "dev.containers.cacheVolume": true
+                // to apply your extensions and settings in .devcontainer/devcontainer.json with (true) or without (false) cache.
             }
         }
     }
