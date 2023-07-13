@@ -35,6 +35,7 @@ RUN apt-get update \
     ghostscript \
     pdf2svg \
     gdebi-core\
+    tree \
     && echo $NB_USER ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$NB_USER \
     && chmod 0440 /etc/sudoers.d/$NB_USER \
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
@@ -42,6 +43,7 @@ RUN apt-get update \
 # ghostscript for handling eps image files
 # pdf2svg is for vscode eps-preview extension
 # gdebi-core is for install deb file
+# tree is a convenient tool to print directory tree
 
 # Install quarto
 # See: 
