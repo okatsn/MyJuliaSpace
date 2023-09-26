@@ -56,14 +56,10 @@ RUN gdebi --non-interactive quarto-linux-amd64.deb
 ARG VARIANT="what.ever.is.ok.since.it.will.be.overwritten.by.that.in.docker-compose.yml"
 ARG JULIA_PKG_DEVDIR="this.is.into.which.dev.clones.packages."
 ARG SUB_PROJECT_DIR="this.is.into.which.git.clones.any.repos."
-ARG VSCODE_PATH="Foo"
-ARG VSCODE_INSIDER_PATH="Bar"
 
 # Set enviroment variable
 ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
-    SUB_PROJECT_DIR=${SUB_PROJECT_DIR} \
-    VSCODE_PATH=${VSCODE_PATH} \
-    VSCODE_INSIDER_PATH=${VSCODE_INSIDER_PATH}
+    SUB_PROJECT_DIR=${SUB_PROJECT_DIR}
 # equivalent to:
 # RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
 
@@ -146,7 +142,12 @@ RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e ' \
     using Pkg; \
     Pkg.add(name="IJulia"); \
-    Pkg.build("IJulia") \
+    Pkg.add(name="OhMyREPL"); \
+    Pkg.add(name="Revise"); \
+    Pkg.add(name="TerminalPager"); \
+    Pkg.add(name="Test"); \
+    Pkg.instantiate(); \
+    Pkg.build("IJulia"); \
     '
 
 # build IJulia is required to make any jupyter related functions such as quarto
@@ -157,12 +158,8 @@ RUN julia -e 'using Pkg; Pkg.update()' \
 # - https://code.visualstudio.com/remote/advancedcontainers/overview#_advanced-containers-topics
 # - https://code.visualstudio.com/docs/devcontainers/containers#_create-a-devcontainerjson-file
 
-RUN mkdir -p $VSCODE_PATH/extensions \
-    $VSCODE_INSIDER_PATH/extensions \
-    $SUB_PROJECT_DIR \
-    && chown -R $NB_USER \
-    $VSCODE_PATH \
-    $VSCODE_INSIDER_PATH
+RUN mkdir -p $JULIA_PKG_DEVDIR \
+    $SUB_PROJECT_DIR
 
 # Jupyter settings
 RUN mkdir -p /home/$NB_USER/.jupyter/lab/user-settings/@jupyterlab/notebook-extension \

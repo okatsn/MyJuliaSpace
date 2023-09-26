@@ -13,8 +13,6 @@ services:
         WORKSPACE_DIR: /home/jovyan/devspace #can be arbitrary; it's not required to be identical with the project directory in your WSL unbuntu (20.04)
         JULIA_PKG_DEVDIR: /home/jovyan/.julia/dev # just let it be default. See [JULIA_PKG_DEVDIR](https://docs.julialang.org/en/v1/manual/environment-variables/#JULIA_PKG_DEVDIR). Be aware that some tests will depend on JULIA_PKG_DEVDIR.
         SUB_PROJECT_DIR: /home/jovyan/devspace/subprojects # KEYNOTE: also check "gitProjectManager.baseProjectsFolders" in devcontainer.json that if GPM can get JULIA_PKG_DEVDIR and SUB_PROJECT_DIR
-        VSCODE_PATH: /home/jovyan/.vscode-server
-        VSCODE_INSIDER_PATH: /home/jovyan/.vscode-server-insiders
     init: true
     # See https://docs.docker.com/compose/compose-file/compose-file-v3/#init
     container_name: my-julia-space
@@ -26,14 +24,7 @@ services:
       # This is where VS Code should expect to find your project's source code and the value of "devspaceFolder" in .devcontainer/devcontainer.json
       - ..:/home/jovyan/devspace
       # # KEYNOTE: Define volumes in service
-      # Persistent the julia depot
-      - julia-depot:/home/jovyan/.julia
       # # Avoid reinstall vscode extensions
-      # KEYNOTE: make sure /home/$NB_USER/.vscode-server/extensions is `mkdir`ed in Dockerfile
-      # KEYNOTE: .vscode-server should not exist in the image to be pushed
-      # - If the entire .vscode-server directories does not be added to volumes, such as the case that only .vscode-server/extensions is added to volumes, in the later stage from this image (FROM okatsn/my-julia-space) cannot have their customized vscode extensions in devcontainer.json successfully setup.
-      - vscode-server:/home/jovyan/.vscode-server
-      - vscode-server-insiders:/home/jovyan/.vscode-server-insiders
       # Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker-compose for details.
       # - /var/run/docker.sock:/var/run/docker.sock
       # Overrides default command so things don't shut down after the process ends.
@@ -44,6 +35,4 @@ volumes:
   # KEYNOTE: Those defined volumes in service should be declared in the root level
   # - vscode-server are binded because I don't want them be in the image (which might cause permission issues when FROM my-julia-space that a new set of extensions is intended to be installed in container building stage)
   # - Don't bind vscode-server if you like your container has extensions installed as prescripted in devcontainer.json
-  julia-depot:
-  vscode-server:
-  vscode-server-insiders:
+  ..:
