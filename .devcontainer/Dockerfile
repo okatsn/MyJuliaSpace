@@ -1,7 +1,17 @@
+# KEYNOTE: How to build the image solely from this Dockerfile:
+# (In MyJuliaSpace/)
+# $ docker build -t myjspace0926 -f .devcontainer/Dockerfile .
+# $ docker tag myjspace0926 okatsn/my-julia-space:v202309
+# $ docker push okatsn/my-julia-space:v202309
+#
+# Why not use devcontainer.json to build?
+# - Building image from devcontainer.json creates some additional files, such as those in /home/jovyan/.vscode-server and /home/jovyan/.vscode-server-insiders
+# - If there are other container (saying the-target) built upon this image, and it also has /home/jovyan/.vscode-server but should with different content, the files in source (my-julia-space) is kept, and those in the target are discarded. This is not what we want.
+#
 # TODOs:
 # - auto pairing for .qmd (``, ...) (auto closing works fine)
-
-
+# - consider delete docker-compose.yml and devcontainer.json
+#
 # References:
 # https://github.com/andferrari/julia_notebook/blob/master/Dockerfile
 # https://github.com/marius311/CMBLensing.jl/blob/master/Dockerfile
@@ -16,7 +26,7 @@ USER root
 # RUN echo $("ls")
 # To see where am I
 
-ARG WORKSPACE_DIR=/home/jovyan/whateverisoksinceitwillbeoverwritten
+ARG WORKSPACE_DIR=/home/jovyan/devspace
 ## Starship configuration
 # - The current building context (see docker-compose.yml) is ".." (the parent folder of Dockerfile); thus .devcontainer/starship.toml is the right directory
 # - In jupyter/base-notebook, WORKDIR is switched to $HOME; in jupyter/minimal-notebook, no WORKDIR switch action. The WORKDIR in previous building seems to be void in this stage.
@@ -53,9 +63,9 @@ RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 RUN gdebi --non-interactive quarto-linux-amd64.deb
 
 # Install Julia
-ARG VARIANT="what.ever.is.ok.since.it.will.be.overwritten.by.that.in.docker-compose.yml"
-ARG JULIA_PKG_DEVDIR="this.is.into.which.dev.clones.packages."
-ARG SUB_PROJECT_DIR="this.is.into.which.git.clones.any.repos."
+ARG VARIANT="1.9.3"
+ARG JULIA_PKG_DEVDIR=/home/jovyan/.julia/dev
+ARG SUB_PROJECT_DIR=/home/jovyan/devspace/subprojects
 
 # Set enviroment variable
 ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
