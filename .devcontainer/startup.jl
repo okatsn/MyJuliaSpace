@@ -6,6 +6,6 @@ atreplinit() do repl
     try
         @eval using OhMyREPL, TerminalPager
     catch e
-        @warn "error while importing OhMyREPL" e
+        @warn "error in startup.jl (okatsn/my-julia-space)" e
     end
 end # mkdir -p $HOME/.julia/config && cp startup.jl "$_"
