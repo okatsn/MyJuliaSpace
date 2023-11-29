@@ -63,7 +63,7 @@ RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 RUN gdebi --non-interactive quarto-linux-amd64.deb
 
 # Install Julia
-ARG VARIANT="1.9.3"
+ARG VARIANT="1.9.4"
 ARG JULIA_PKG_DEVDIR=/home/jovyan/.julia/dev
 ARG SUB_PROJECT_DIR=/home/jovyan/devspace/subprojects
 
