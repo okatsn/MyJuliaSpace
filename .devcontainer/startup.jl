@@ -17,3 +17,5 @@ atreplinit() do repl
         @warn "error in startup.jl (okatsn/my-julia-space)" e
     end
 end # mkdir -p $HOME/.julia/config && cp startup.jl "$_"
+
+using OkStartUp
