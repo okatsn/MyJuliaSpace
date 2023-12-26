@@ -152,6 +152,7 @@ RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e ' \
     using Pkg; \
     Pkg.add(name="IJulia"); \
+    Pkg.add(name="OkStartUp"); \
     Pkg.add(name="OhMyREPL"); \
     Pkg.add(name="Revise"); \
     Pkg.add(name="TerminalPager"); \
