@@ -134,11 +134,21 @@ RUN mamba install --quiet --yes \
     invoke=2.0 \
     pre-commit=3.1 \
     commitizen=2.28 \
-    dvc-s3=2.21 \
-    dvc-gdrive=2.19 \
+    # dvc-s3=2.21 \
+    # dvc-gdrive=2.19 \
     jupyter_contrib_nbextensions=0.7 \
     && mamba clean --all -f -y \
     && npm cache clean --force
+
+# Install DVC (please make it synced with MyTeXLife)
+RUN wget https://dvc.org/deb/dvc.list -O /etc/apt/sources.list.d/dvc.list \
+    && wget -qO - https://dvc.org/deb/iterative.asc | gpg --dearmor > packages.iterative.gpg \
+    && install -o root -g root -m 644 packages.iterative.gpg /etc/apt/trusted.gpg.d/ \
+    && rm -f packages.iterative.gpg \
+    && apt update \
+    && apt install dvc=3.33.4 \
+    && dvc completion -s bash | tee /etc/bash_completion.d/dvc
+
 
 # Add julia packages and precompile
 # NOTE: These packages will be added under @#.# (e.g. @v1.6)
