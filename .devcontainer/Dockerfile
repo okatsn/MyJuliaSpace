@@ -1,8 +1,8 @@
 # KEYNOTE: How to build the image solely from this Dockerfile:
-# (In MyJuliaSpace/)
-# $ docker build -t myjspace0926 -f .devcontainer/Dockerfile .
-# $ docker tag myjspace0926 okatsn/my-julia-space:v202309
-# $ docker push okatsn/my-julia-space:v202309
+# (In MyJuliaSpace/; change "latest" to any other tag names)
+# $ docker build -t myjspace -f .devcontainer/Dockerfile .
+# $ docker tag myjspace okatsn/my-julia-space:latest
+# $ docker push okatsn/my-julia-space:latest
 #
 # Why not use devcontainer.json to build?
 # - Building image from devcontainer.json creates some additional files, such as those in /home/jovyan/.vscode-server and /home/jovyan/.vscode-server-insiders
