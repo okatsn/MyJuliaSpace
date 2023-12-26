@@ -136,6 +136,7 @@ RUN mamba install --quiet --yes \
     commitizen=2.28 \
     # dvc-s3=2.21 \
     # dvc-gdrive=2.19 \
+    # # DVC-S3 uses S3 protocol, such as for Amazon S3
     jupyter_contrib_nbextensions=0.7 \
     && mamba clean --all -f -y \
     && npm cache clean --force
