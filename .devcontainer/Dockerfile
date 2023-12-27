@@ -185,7 +185,6 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # KEYNOTE: use $HOME instead of /home/$NB_USER will fail! Since $HOME is not recognized as absolute directory!
 COPY --from=build-julia /home/okatsn/.julia /home/$NB_USER/.julia
 COPY --from=build-julia /opt/julia-okatsn /opt/julia-okatsn
-COPY --from=build-julia /home/okatsn/Project.toml /home/$NB_USER/$WORKSPACE_DIR
 RUN sudo ln -fs /opt/julia-okatsn/bin/julia /usr/local/bin/julia
 
 # Pluto port
