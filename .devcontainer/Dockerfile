@@ -134,8 +134,10 @@ RUN mamba install --quiet --yes \
     invoke=2.0 \
     pre-commit=3.1 \
     commitizen=2.28 \
-    dvc-s3=2.21 \
-    dvc-gdrive=2.19 \
+    dvc=3.33.4 \
+    # dvc-s3=2.21 \
+    # dvc-gdrive=2.19 \
+    # # DVC-S3 uses S3 protocol, such as for Amazon S3
     jupyter_contrib_nbextensions=0.7 \
     && mamba clean --all -f -y \
     && npm cache clean --force
@@ -157,6 +159,7 @@ RUN julia -e 'using Pkg; Pkg.update()' \
     Pkg.add(name="Revise"); \
     Pkg.add(name="TerminalPager"); \
     Pkg.add(name="Test"); \
+    Pkg.add(name="BenchmarkTools"); \
     Pkg.instantiate(); \
     Pkg.build("IJulia"); \
     '
