@@ -12,10 +12,8 @@
 #     as expected.
 atreplinit() do repl
     try
-        @eval using OhMyREPL, TerminalPager
+        @eval using OhMyREPL, TerminalPager, OkStartUp
     catch e
         @warn "error in startup.jl (okatsn/my-julia-space)" e
     end
 end # mkdir -p $HOME/.julia/config && cp startup.jl "$_"
-
-using OkStartUp

@@ -159,6 +159,7 @@ RUN julia -e 'using Pkg; Pkg.update()' \
     Pkg.add(name="Revise"); \
     Pkg.add(name="TerminalPager"); \
     Pkg.add(name="Test"); \
+    Pkg.add(name="BenchmarkTools"); \
     Pkg.instantiate(); \
     Pkg.build("IJulia"); \
     '
