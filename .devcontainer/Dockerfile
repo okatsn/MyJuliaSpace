@@ -17,6 +17,9 @@
 # https://github.com/marius311/CMBLensing.jl/blob/master/Dockerfile
 # https://github.com/MalteBoehm/julia_docker-compose_template/blob/main/Dockerfile
 
+FROM okatsn/my-julia-build as build-julia
+# Please refer to the instruction in the Dockerfile of okatsn/my-julia-build
+
 FROM jupyter/minimal-notebook:python-3.10
 # From dockerhub get an example image that you don't need to build your linux environment from scratch
 # https://hub.docker.com/layers/jupyter/minimal-notebook/python-3.10/images/sha256-ff7d41def49b6805cb40c0e570d0a0fa12131d1bb9377d7744935be561d16dc9?context=explore
@@ -63,7 +66,6 @@ RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 RUN gdebi --non-interactive quarto-linux-amd64.deb
 
 # Install Julia
-ARG VARIANT="1.9.4"
 ARG JULIA_PKG_DEVDIR=/home/jovyan/.julia/dev
 ARG SUB_PROJECT_DIR=/home/jovyan/devspace/subprojects
 
@@ -72,13 +74,6 @@ ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR} \
     SUB_PROJECT_DIR=${SUB_PROJECT_DIR}
 # equivalent to:
 # RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
-
-# it should be defined here, despite it will overwritten by that in docker-compose.yml
-RUN mkdir /opt/julia-${VARIANT} \
-    && curl -L https://julialang-s3.julialang.org/bin/linux/x64/`echo ${VARIANT} | cut -d. -f 1,2`/julia-${VARIANT}-linux-x86_64.tar.gz | tar zxf - -C /opt/julia-${VARIANT} --strip=1 \
-    && ln -fs /opt/julia-${VARIANT}/bin/julia /usr/local/bin/julia
-
-
 
 
 # CHECKPOINT: I don't know why USER's GID is 1000, which is not 100  as here (https://hub.docker.com/layers/jupyter/minimal-notebook/ubuntu-22.04/images/sha256-a1b3973c6699351118799ad96b55c1fa71b186fa2a9983a4a63aa103905fb073?context=explore) or here (https://hub.docker.com/r/jupyter/base-notebook/dockerfile)
@@ -142,31 +137,6 @@ RUN mamba install --quiet --yes \
     && mamba clean --all -f -y \
     && npm cache clean --force
 
-# Add julia packages and precompile
-# NOTE: These packages will be added under @#.# (e.g. @v1.6)
-
-ENV JULIA_PROJECT=@.
-
-RUN julia -e 'using Pkg; Pkg.update()' \
-    && julia -e '\
-    using Pkg; \
-    Pkg.Registry.add(RegistrySpec(url = "https://github.com/okatsn/OkRegistry.git"))' \
-    && julia -e ' \
-    using Pkg; \
-    Pkg.add(name="IJulia"); \
-    Pkg.add(name="OkStartUp"); \
-    Pkg.add(name="OhMyREPL"); \
-    Pkg.add(name="Revise"); \
-    Pkg.add(name="TerminalPager"); \
-    Pkg.add(name="Test"); \
-    Pkg.add(name="BenchmarkTools"); \
-    Pkg.instantiate(); \
-    Pkg.build("IJulia"); \
-    '
-
-# build IJulia is required to make any jupyter related functions such as quarto
-# Add other default packages using an Project.toml
-
 # Avoid VS Code extension reinstalls. For more information, see
 # - https://github.com/microsoft/vscode-remote-release/issues/7690
 # - https://code.visualstudio.com/remote/advancedcontainers/overview#_advanced-containers-topics
@@ -213,9 +183,10 @@ RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
 # # KEYNOTE: For OhMyREPL etc.
 # RUN mkdir -p /home/$NB_USER/.julia/config && cp .devcontainer/startup.jl "$_" # This mkdir all necessary paths and copy files to there in one line. It worked in bash but failed in Dockerfile.
 # KEYNOTE: use $HOME instead of /home/$NB_USER will fail! Since $HOME is not recognized as absolute directory!
-RUN mkdir -p /home/$NB_USER/.julia/config
-COPY .devcontainer/startup.jl /home/$NB_USER/.julia/config/startup.jl
-# COPY startup.jl in the end to avoid permission error
+COPY --from=build-julia /home/okatsn/.julia /home/$NB_USER/.julia
+COPY --from=build-julia /opt/julia-okatsn /opt/julia-okatsn
+COPY --from=build-julia /home/okatsn/Project.toml /home/$NB_USER/$WORKSPACE_DIR
+RUN sudo ln -fs /opt/julia-okatsn/bin/julia /usr/local/bin/julia
 
 # Pluto port
 EXPOSE 1234
